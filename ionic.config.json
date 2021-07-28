@@ -1,0 +1,7 @@
+{
+  "name": "OutSport",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

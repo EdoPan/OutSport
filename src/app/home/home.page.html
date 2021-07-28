@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      OutSport
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">OutSport</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
+
+<ion-content class="auth-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col align-self-center>
+        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Iscriviti</ion-button>
+
+
+        <p align="center">Sei già un utente?</p>
+
+        <ion-button [routerLink]="['/login']" expand="block" color="danger">Accedi</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
