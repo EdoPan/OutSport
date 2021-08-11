@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input placeholder="example@domain.com" name="email" formControlName="email" type="text" required></ion-input>
+    </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationUserMessage.email">
+        <div class="error_message" *ngIf="validationFormUser.get('email').hasError(validation.type) && (validationFormUser.get('email').dirty || validationFormUser.get('email').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input placeholder="********" name="Password" formControlName="password" type="password" required></ion-input>
+    </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationUserMessage.password">
+        <div class="error_message" *ngIf="validationFormUser.get('password').hasError(validation.type) && (validationFormUser.get('password').dirty || validationFormUser.get('password').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit"  [disabled]="!validationFormUser.valid" color="danger" expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>

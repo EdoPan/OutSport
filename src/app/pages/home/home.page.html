@@ -18,12 +18,12 @@
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Iscriviti</ion-button>
+        <ion-button [routerLink]="['/registration']" expand="block" color="primary" (click)="registerUser()">Sign-up</ion-button>
 
 
-        <p align="center">Sei già un utente?</p>
+        <p align="center">Are you already a user?</p>
 
-        <ion-button [routerLink]="['/login']" expand="block" color="danger">Accedi</ion-button>
+        <ion-button [routerLink]="['/login']" expand="block" color="danger">Login</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
