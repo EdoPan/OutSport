@@ -9,9 +9,12 @@
 
 <ion-content>
   <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
+
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input placeholder="example@domain.com" name="email" formControlName="email" type="text" required></ion-input>
+      <ion-input placeholder=" example@domain.com" name="email" formControlName="email" type="text" required>
+        <ion-icon name="mail-outline"></ion-icon>
+      </ion-input>
     </ion-item>
 
     <div>
@@ -24,7 +27,9 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input placeholder="********" name="Password" formControlName="password" type="password" required></ion-input>
+      <ion-input placeholder=" ********" name="Password" formControlName="password" type="password" required>
+        <ion-icon name="lock-closed" ></ion-icon>
+      </ion-input>
     </ion-item>
 
     <div>

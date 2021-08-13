@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, LoadingController, NavController} from '@ionic/angular';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {AlertController, NavController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.page.html',
-  styleUrls: ['./registration.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class RegistrationPage implements OnInit {
+export class SignupPage implements OnInit {
 
   validationMessages = {
     email: [
@@ -22,11 +22,15 @@ export class RegistrationPage implements OnInit {
     ]
   };
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   ValidationFormUser: FormGroup;
   loading: any;
 
-  constructor(private router: Router, private formbuilder: FormBuilder, private authService: AuthService,
-              private alertCtrl: AlertController, private navCtr: NavController){}
+  constructor( private router: Router,
+               private formbuilder: FormBuilder,
+               private authService: AuthService,
+               private alertCtrl: AlertController,
+               private navCtr: NavController){}
 
   ngOnInit() {
     this.ValidationFormUser = this.formbuilder.group({
@@ -38,28 +42,28 @@ export class RegistrationPage implements OnInit {
         Validators.required,
         Validators.minLength(6)
       ]))
-    })
+    });
   }
 
   registerUser(value){
     //this.showalert();
-    this.router.navigate(['login']);
+    this.router.navigate(['tabs']);
     try {
       this.authService.userRegistration(value).then( response =>{
-        console.log(response);
-        if(response.user){
-          response.updateProfile({
-            email: value.email,
-          });
-          this.loading.dismiss();
-          this.router.navigate(['login']);
-        }
-      }, error=>{
+          console.log(response);
+          if(response.user){
+            response.updateProfile({
+              email: value.email,
+            });
+            this.loading.dismiss();
+            this.router.navigate(['tabs']);
+          }
+        }, error=>{
           this.loading.dismiss();
           this.errorLoading(error.message);
         }
-      )}catch (erro){
-      console.log(erro)
+      );}catch (erro){
+      console.log(erro);
     }
   }
 
@@ -70,17 +74,17 @@ export class RegistrationPage implements OnInit {
       buttons:[{
         text:'ok',
         handler: ()=>{
-          this.navCtr.navigateBack(['registration'])
+          this.navCtr.navigateBack(['registration']);
         }
       }]
-    })
+    });
     await loading.present();
   }
 
   async showalert(){
     var load = await this.alertCtrl.create({
       message:'Please wait',
-    })
+    });
     load.present();
   }
 

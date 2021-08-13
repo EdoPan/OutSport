@@ -15,7 +15,7 @@ export class HomePage {
   }
 
   registerUser(){
-    this.nav.navigateForward( ['registration'] );
+    this.nav.navigateForward( ['signup'] );
   }
 
 }

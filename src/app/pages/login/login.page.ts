@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
     try {
       this.authservice.loginFireauth(value).then( resp =>{
           console.log(resp);
-          this.router.navigate(['activities']);
+          this.router.navigate(['tabs']);
         })
     }catch(err){
       console.log(err);

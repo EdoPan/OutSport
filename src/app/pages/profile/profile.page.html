@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Update your profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Sex</ion-label>
+      <ion-input name="sex" placeholder="Male/Female" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Age</ion-label>
+      <ion-input name="age" placeholder="ex. 25" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Height</ion-label>
+      <ion-input name="height" placeholder="ex. 1.75" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Weight</ion-label>
+      <ion-input name="weight" placeholder="ex. 70" type="number"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Save the data</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom,top">
+
+      <ion-tab-button tab="activities">
+        <ion-icon name="walk" (click)="goToTabsPage()"></ion-icon>
+        <ion-label>Sports</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="calendar">
+        <ion-icon name="calendar" (click)="goToCalendarPage()"></ion-icon>
+        <ion-label>Calendar</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="settings">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+
+</ion-content>
