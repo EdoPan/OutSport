@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Update your profile
-    </ion-title>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,26 +34,5 @@
     </ion-row>
 
   </form>
-
-  <ion-tabs>
-    <ion-tab-bar slot="bottom,top">
-
-      <ion-tab-button tab="activities">
-        <ion-icon name="walk" (click)="goToTabsPage()"></ion-icon>
-        <ion-label>Sports</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="calendar">
-        <ion-icon name="calendar" (click)="goToCalendarPage()"></ion-icon>
-        <ion-label>Calendar</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="settings">
-        <ion-icon name="person-circle-outline"></ion-icon>
-        <ion-label>Profile</ion-label>
-      </ion-tab-button>
-
-    </ion-tab-bar>
-  </ion-tabs>
 
 </ion-content>

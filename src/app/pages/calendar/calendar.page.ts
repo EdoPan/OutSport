@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-calendar',
@@ -8,16 +7,9 @@ import {NavController} from "@ionic/angular";
 })
 export class CalendarPage implements OnInit {
 
-  constructor( private nav: NavController ) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  goToTabsPage(){
-    this.nav.navigateForward( ['tabs'] );
-  }
-
-  goToProfilePage(){
-    this.nav.navigateForward( ['profile'] );
-  }
 }
