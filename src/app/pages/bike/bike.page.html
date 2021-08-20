@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [disabled]="disableBackButton"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Bike</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="timer">
+    <p>{{time.toISOString().substr(11, 8)}}</p>
+  </div>
+
+  <ion-fab-button class="stop" shape="round" expand="block" fill="outline" (click)="stopActivity()">Stop</ion-fab-button>
+  <ion-fab-button class="pause" shape="round" expand="block" fill="outline" (click)="pauseTimer()">Pause</ion-fab-button>
+  <ion-fab-button class="start" shape="round" expand="block" fill="outline" (click)="startTimer()" [disabled]="disableButton">Start</ion-fab-button>
+
+</ion-content>

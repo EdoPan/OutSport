@@ -24,7 +24,21 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'run',
+    loadChildren: () => import('./pages/run/run.module').then(m => m.RunPageModule)
+  },
+  {
+    path: 'walk',
+    loadChildren: () => import('./pages/walk/walk.module').then(m => m.WalkPageModule)
+  },
+  {
+    path: 'bike',
+    loadChildren: () => import('./pages/bike/bike.module').then(m => m.BikePageModule)
   }
+
+
 
 ];
 
