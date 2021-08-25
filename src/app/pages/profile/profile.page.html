@@ -5,34 +5,66 @@
 </ion-header>
 
 <ion-content>
-  <form>
+  <form [formGroup]="validationFormUser">
 
     <ion-item lines="full">
-      <ion-label position="floating">Sex</ion-label>
-      <ion-input name="sex" placeholder="Male/Female" type="text"></ion-input>
+      <ion-label position="floating">Gender</ion-label>
+      <ion-input formControlName="gender" placeholder="Male/Female" type="text"></ion-input>
     </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.gender">
+        <div class="error_message" *ngIf="validationFormUser.get('gender').hasError(validation.type) && (validationFormUser.get('gender').dirty || validationFormUser.get('gender').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item lines="full">
       <ion-label position="floating">Age</ion-label>
-      <ion-input name="age" placeholder="ex. 25" type="number"></ion-input>
+      <ion-input formControlName="age" placeholder="ex. 25" type="number"></ion-input>
     </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.age">
+        <div class="error_message" *ngIf="validationFormUser.get('age').hasError(validation.type) && (validationFormUser.get('age').dirty || validationFormUser.get('age').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item lines="full">
       <ion-label position="floating">Height</ion-label>
-      <ion-input name="height" placeholder="ex. 1.75" type="number"></ion-input>
+      <ion-input formControlName="height" placeholder="ex. 175 cm" type="number"></ion-input>
     </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.height">
+        <div class="error_message" *ngIf="validationFormUser.get('height').hasError(validation.type) && (validationFormUser.get('height').dirty || validationFormUser.get('height').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-item lines="full">
       <ion-label position="floating">Weight</ion-label>
-      <ion-input name="weight" placeholder="ex. 70" type="number"></ion-input>
+      <ion-input formControlName="weight" placeholder="ex. 70 Kg" type="number"></ion-input>
     </ion-item>
+
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.weight">
+        <div class="error_message" *ngIf="validationFormUser.get('weight').hasError(validation.type) && (validationFormUser.get('weight').dirty || validationFormUser.get('weight').touched)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="danger" expand="block">Save the data</ion-button>
+        <ion-button type="submit" color="danger" expand="block" (click)="saveData()" [disabled]="!validationFormUser.valid">Save the data</ion-button>
       </ion-col>
     </ion-row>
 
+    <ion-button color="danger" size="small" (click)="navigateToHome()">Log-out</ion-button>
   </form>
-
 </ion-content>

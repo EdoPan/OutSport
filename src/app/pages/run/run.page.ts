@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-run',
@@ -8,15 +10,17 @@ import { AlertController } from '@ionic/angular';
 })
 export class RunPage implements OnInit {
 
-  constructor(public alertController: AlertController) { }
-
-  ngOnInit() {
-  }
-
   disableBackButton;
   disableButton;
   interval;
   time = new Date(null);
+  date = new Date();
+  db = firebase.firestore();
+
+  constructor( public alertController: AlertController, private nav: NavController ) { }
+
+  ngOnInit() {
+  }
 
   startTimer() {
     this.interval = setInterval(() => {
@@ -40,15 +44,20 @@ export class RunPage implements OnInit {
         {
           text: 'Save',
           handler: () => {
-            //Qui va il metodo per salvare i dati nel database, portarli nel calendario e reindirizzare
-            // sulla pagina del calendario (anche questo lo sa fare Marco)
+            this.db.collection('workouts').doc().set({
+              email: firebase.auth().currentUser.email,
+              sport: 'run',
+              date: this.date,
+              time: this.interval,
+            });
+            this.nav.navigateForward( ['tabs'] );
           }
         },
         {
           text: 'Discard',
           role: 'cancel',
           handler: () => {
-            //Qui va il metodo per ritornare alla pagina Activities (lo sa fare Marco)
+            this.nav.navigateForward( ['tabs'] );
           }
         }
       ]

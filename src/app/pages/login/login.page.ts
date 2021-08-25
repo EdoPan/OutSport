@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  validationFormUser: FormGroup;
+  ValidationFormUser: FormGroup;
   validationUserMessage ={
     email:[
       {type:'required', message:'Please enter your Email'},
@@ -26,10 +26,10 @@ export class LoginPage implements OnInit {
   constructor( public formbuilder: FormBuilder, public authservice: AuthService, private router: Router, ) { }
 
   ngOnInit() {
-    this.validationFormUser = this.formbuilder.group({
+    this.ValidationFormUser = this.formbuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        Validators.pattern('[A-z0-9\\.\\+_-]+@[A-z0-9\\._-]+\\.[A-z]{2,6}')
       ])),
       password: new FormControl('', Validators.compose([
         Validators.required,

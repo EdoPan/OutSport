@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="validationFormUser" (ngSubmit)="LoginUser(validationFormUser.value)">
+  <form [formGroup]="ValidationFormUser" (ngSubmit)="LoginUser(ValidationFormUser.value)">
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
@@ -19,7 +19,7 @@
 
     <div>
       <ng-container *ngFor="let validation of validationUserMessage.email">
-        <div class="error_message" *ngIf="validationFormUser.get('email').hasError(validation.type) && (validationFormUser.get('email').dirty || validationFormUser.get('email').touched)">
+        <div class="error_message" *ngIf="ValidationFormUser.get('email').hasError(validation.type) && (ValidationFormUser.get('email').dirty || ValidationFormUser.get('email').touched)">
           {{validation.message}}
         </div>
       </ng-container>
@@ -34,7 +34,7 @@
 
     <div>
       <ng-container *ngFor="let validation of validationUserMessage.password">
-        <div class="error_message" *ngIf="validationFormUser.get('password').hasError(validation.type) && (validationFormUser.get('password').dirty || validationFormUser.get('password').touched)">
+        <div class="error_message" *ngIf="ValidationFormUser.get('password').hasError(validation.type) && (ValidationFormUser.get('password').dirty || ValidationFormUser.get('password').touched)">
           {{validation.message}}
         </div>
       </ng-container>
@@ -42,7 +42,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit"  [disabled]="!validationFormUser.valid" color="danger" expand="block">Login</ion-button>
+        <ion-button type="submit"  [disabled]="!ValidationFormUser.valid" color="danger" expand="block">Login</ion-button>
       </ion-col>
     </ion-row>
 

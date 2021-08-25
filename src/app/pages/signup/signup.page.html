@@ -44,7 +44,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="!ValidationFormUser.valid" type="submit" color="danger" expand="block">Sing-up</ion-button>
+        <ion-button [disabled]="!ValidationFormUser.valid" type="submit" color="danger" expand="block" (click)="emailDB()">Sing-up</ion-button>
       </ion-col>
     </ion-row>
 

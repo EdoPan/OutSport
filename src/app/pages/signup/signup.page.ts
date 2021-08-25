@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {AlertController, NavController} from '@ionic/angular';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-signup',
@@ -86,6 +88,17 @@ export class SignupPage implements OnInit {
       message:'Please wait',
     });
     load.present();
+  }
+
+  emailDB(){
+    const db = firebase.firestore(); //Creo un'istanza del DB
+    db.collection('users').doc(this.ValidationFormUser.value.email.toString()).set({
+      email: this.ValidationFormUser.value.email,
+      gender: '',
+      age: '',
+      height: '',
+      weight: ''
+    });
   }
 
 }
