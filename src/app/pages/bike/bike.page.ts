@@ -11,7 +11,8 @@ import 'firebase/firestore';
 export class BikePage implements OnInit {
 
   disableBackButton;
-  disableButton;
+  disableStartButton;
+  disableStopButton = true;
   interval;
   time = new Date(null);
   date = new Date();
@@ -26,13 +27,14 @@ export class BikePage implements OnInit {
     this.interval = setInterval(() => {
       this.time.setSeconds(this.time.getSeconds() + 1 );
     }, 1000);
-    this.disableButton = true;
+    this.disableStartButton = true;
     this.disableBackButton = true;
+    this.disableStopButton = false;
   }
 
   pauseTimer() {
     clearInterval(this.interval);
-    this.disableButton = false;
+    this.disableStartButton = false;
   }
 
   async stopActivity() {
@@ -55,7 +57,6 @@ export class BikePage implements OnInit {
         },
         {
           text: 'Discard',
-          role: 'cancel',
           handler: () => {
             this.nav.navigateForward( ['tabs'] );
           }
@@ -63,7 +64,7 @@ export class BikePage implements OnInit {
       ]
     });
     await alert.present();
-    this.disableButton = false;
+    this.disableStartButton = false;
   }
 
 }
