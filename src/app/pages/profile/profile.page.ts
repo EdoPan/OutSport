@@ -72,7 +72,7 @@ export class ProfilePage implements OnInit {
       message: 'Data were recorded in the database',
       buttons: [
         {
-          text: 'OK',
+          text: 'Ok',
           handler: () => {
             //this.nav.navigateForward( ['tabs'] );
           }
