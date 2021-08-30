@@ -11,17 +11,6 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 
   ValidationFormUser: FormGroup;
-  validationUserMessage ={
-    email:[
-      {type:'required', message:'Please enter your Email'},
-      {type:'pattern', message:'The Email entered is Incorrect.Try again'}
-    ],
-    password:[
-      {type:'required', message:'Please Enter your Password!'},
-      {type:'minlength', message:'The Password must be at least 5 characters or more'}
-
-    ]
-  };
 
   constructor( public formbuilder: FormBuilder, public authservice: AuthService, private router: Router, ) { }
 
@@ -43,7 +32,7 @@ export class LoginPage implements OnInit {
     try {
       this.authservice.loginFireauth(value).then( resp =>{
           console.log(resp);
-          this.router.navigate(['tabs']);
+          this.router.navigate(['tabs/activities']);
         })
     }catch(err){
       console.log(err);
