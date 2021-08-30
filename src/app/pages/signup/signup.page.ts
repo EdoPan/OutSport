@@ -16,11 +16,10 @@ export class SignupPage implements OnInit {
   validationMessages = {
     email: [
       {type: 'required',message:'Enter your Email Adress'},
-      {type:'pattern', meesage:'Please the Email Entered is Incorrect. Try again..'}
     ],
     password: [
       {type: 'required', message: 'Password is required here'},
-      {type:'minlength', message: 'Password must be at least 5 character'}
+      {type:'minlength', message: 'Password must be at least 6 character'}
     ]
   };
 

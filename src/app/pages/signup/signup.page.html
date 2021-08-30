@@ -14,12 +14,12 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" name="email" placeholder=" example@domain.com" type="text" required>
+      <ion-input formControlName="email" name="email" placeholder=" Email" type="text" required>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-input>
     </ion-item>
 
-    <div>
+    <div class="text1">
       <ng-container *ngFor="let validation of validationMessages.email">
         <div class="error_message" *ngIf="ValidationFormUser.get('email').hasError(validation.type) && (ValidationFormUser.get('email').dirty || ValidationFormUser.get('email').touched)">
           {{validation.message}}
@@ -29,12 +29,12 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input formControlName="password" name="password" placeholder=" ********" type="password" required>
+      <ion-input formControlName="password" name="password" placeholder=" Password" type="password" required>
         <ion-icon name="lock-closed" ></ion-icon>
       </ion-input>
     </ion-item>
 
-    <div>
+    <div class="text2">
       <ng-container *ngFor="let validation of validationMessages.password">
         <div class="error_message" *ngIf="ValidationFormUser.get('password').hasError(validation.type) && (ValidationFormUser.get('password').dirty || ValidationFormUser.get('password').touched)">
           {{validation.message}}
