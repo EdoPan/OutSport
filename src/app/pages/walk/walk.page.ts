@@ -61,6 +61,14 @@ export class WalkPage implements OnInit {
             this.nav.navigateForward( ['tabs'] );
           }
         }
+      ],
+      inputs: [
+        {
+          name: 'Distance',
+          type: 'text',
+          id: 'distance',
+          placeholder: 'Distance'
+        }
       ]
     });
     await alert.present();
