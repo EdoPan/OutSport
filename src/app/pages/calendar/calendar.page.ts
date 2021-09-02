@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import {AlertController, IonInfiniteScroll} from '@ionic/angular';
-import firebase from "firebase";
 
 @Component({
   selector: 'app-calendar',
