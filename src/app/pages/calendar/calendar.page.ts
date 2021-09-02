@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import {AlertController, IonInfiniteScroll} from '@ionic/angular';
+import firebase from "firebase";
 
 @Component({
   selector: 'app-calendar',
@@ -9,7 +10,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 export class CalendarPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor() { }
+  constructor(public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -30,6 +31,19 @@ export class CalendarPage implements OnInit {
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Where does my data go?',
+      message: 'All the data collected during workouts is stored on the storage of your device so be very carefull on what you delete!',
+      buttons: [
+        {
+          text: 'Ok',
+        },
+      ]
+    });
+    await alert.present();
   }
 
 }
