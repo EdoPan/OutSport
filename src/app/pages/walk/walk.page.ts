@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
+import { WorkoutService } from '../../services/workout.service';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { Workout } from '../../model/workout.model';
 
 @Component({
   selector: 'app-walk',
@@ -14,19 +16,23 @@ export class WalkPage implements OnInit {
   disableStartButton;
   disableStopButton = true;
   interval;
+  inter = 0;//intervallo per il database
+  startTime: number;
+  endTime: number;
   time = new Date(null);
-  date = new Date();
-  db = firebase.firestore();
+  newWorkout: Workout = <Workout>{};
 
-  constructor(public alertController: AlertController, private nav: NavController ) { }
+  constructor(private storageService: WorkoutService, public alertController: AlertController, private nav: NavController ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   startTimer() {
     this.interval = setInterval(() => {
       this.time.setSeconds(this.time.getSeconds() + 1 );
     }, 1000);
+
+    this.startTime = Date.now();
+
     this.disableStartButton = true;
     this.disableBackButton = true;
     this.disableStopButton = false;
@@ -34,24 +40,41 @@ export class WalkPage implements OnInit {
 
   pauseTimer() {
     clearInterval(this.interval);
+
+    this.endTime = Date.now();
+    this.inter = this.endTime - this.startTime;
+
     this.disableStartButton = false;
   }
 
   async stopActivity() {
     clearInterval(this.interval);
+
+    this.endTime = Date.now();
+    this.inter = this.inter + (this.endTime - this.startTime);
+
     const alert = await this.alertController.create({
       header: 'Save',
       message: 'Do you want to save the workout?',
       buttons: [
         {
           text: 'Save',
-          handler: () => {
-            this.db.collection('workouts').doc().set({
-              email: firebase.auth().currentUser.email,
-              sport: 'walk',
-              date: this.date,
-              time: this.interval,
-            });
+          handler: (res) => {
+            this.newWorkout.email = firebase.auth().currentUser.email;
+            this.newWorkout.sport = 'Walk';
+
+            //PER MEMORIZZARE I DATI IN UN FORMATO: "ORE":"MINUTI":"SECONDI"
+            const hours = Math.floor((this.inter/1000)/3600);
+            const minutes = Math.floor((((this.inter/1000)/3600)-hours)*60);
+            const seconds = Math.floor((((((this.inter/1000)/3600)-hours)*60)-minutes)*60);
+            this.newWorkout.time = String(hours).concat('h:').concat(String(minutes)).concat('m:').concat(String(seconds)).concat('s');
+
+            const today = new Date().toDateString();
+            this.newWorkout.dateDatabase = today;
+
+            this.newWorkout.distance = res.Distance;
+
+            this.storageService.addWorkout( this.newWorkout );
             this.nav.navigateForward( ['tabs'] );
           }
         },
@@ -65,9 +88,10 @@ export class WalkPage implements OnInit {
       inputs: [
         {
           name: 'Distance',
-          type: 'text',
-          id: 'distance',
-          placeholder: 'Distance'
+          id: 'Distance',
+          type: 'number',
+          min: 0,
+          placeholder: 'Distance',
         }
       ]
     });

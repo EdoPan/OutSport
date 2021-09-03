@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
-import {AlertController, IonInfiniteScroll} from '@ionic/angular';
+import {Component, OnInit } from '@angular/core';
+import { StorageService } from '../../services/storage.service';
+import {AlertController, Platform, ToastController} from '@ionic/angular';
+import { Workout } from '../../model/workout.model';
 
 @Component({
   selector: 'app-calendar',
@@ -7,29 +9,55 @@ import {AlertController, IonInfiniteScroll} from '@ionic/angular';
   styleUrls: ['./calendar.page.scss'],
 })
 export class CalendarPage implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(public alertController: AlertController) { }
+  workouts: Workout[] = [];
 
-  ngOnInit() {
+  newWorkout: Workout = <Workout>{};
+
+  constructor(private storageService: StorageService, private plt: Platform, private toastController: ToastController,
+              private alertController: AlertController) {
+    this.plt.ready().then(() => {
+      this.loadWorkouts();
+    });
   }
 
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
+  ngOnInit() {}
 
-      // Logica dell'applicazione per determinare se tutti
-      // i dati sono caricati e disabilitare lo scorrimento infinito
-      // @ts-ignore
-      if (data.length === 1000) {
-        event.target.disabled = true;
-      }
-    }, 500);
+  ionViewWillEnter(){
+    this.loadWorkouts();
   }
 
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  //Read (cRud)
+  loadWorkouts(){
+    this.storageService.getWorkouts().then(workouts =>{
+      this.workouts = workouts;
+    });
+  }
+
+  //Create (Crud)
+  addWorkout() {
+    this.storageService.addWorkout(this.newWorkout).then(workout => {
+      this.newWorkout = <Workout>{};
+      this.showToast('Workout added');
+      this.loadWorkouts();
+    });
+  }
+
+  //Mostra il messaggio passato per parametro a schermo
+  async showToast( msg ){
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1000
+    });
+    toast.present();
+  }
+
+  //Delete (cruD)
+  deleteWorkout( workout: Workout ){
+    this.storageService.deleteWorkout( workout.date ).then(() => {
+      this.showToast('Workout removed');
+      this.loadWorkouts();
+    });
   }
 
   async presentAlert() {
@@ -44,5 +72,6 @@ export class CalendarPage implements OnInit {
     });
     await alert.present();
   }
-
 }
+
+

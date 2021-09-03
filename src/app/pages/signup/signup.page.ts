@@ -71,7 +71,7 @@ export class SignupPage implements OnInit {
   async errorLoading(message: any){
     const loading = await this.alertCtrl.create({
       header:'Error Registering',
-      message:message,
+      message,
       buttons:[{
         text:'ok',
         handler: ()=>{
@@ -83,7 +83,7 @@ export class SignupPage implements OnInit {
   }
 
   async showalert(){
-    var load = await this.alertCtrl.create({
+    const load = await this.alertCtrl.create({
       message:'Please wait',
     });
     load.present();
@@ -98,6 +98,7 @@ export class SignupPage implements OnInit {
       height: '',
       weight: ''
     });
+    //this.storage.set('email': this.ValidationFormUser.value.email, 'gender': '','age': '', 'height': '', 'weight': '');
   }
 
 }

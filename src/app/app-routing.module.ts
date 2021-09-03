@@ -40,7 +40,12 @@ const routes: Routes = [
   {
     path: 'bike',
     loadChildren: () => import('./pages/bike/bike.module').then(m => m.BikePageModule)
+  },
+  {
+    path: 'splash',
+    loadChildren: () => import('./pages/splash/splash.module').then( m => m.SplashPageModule)
   }
+
 
 
 
