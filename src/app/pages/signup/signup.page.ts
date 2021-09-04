@@ -48,7 +48,7 @@ export class SignupPage implements OnInit {
 
   registerUser(value){
     //this.showalert();
-    this.router.navigate(['tabs']);
+    this.router.navigate(['tabs/activities']);
     try {
       this.authService.userRegistration(value).then( response =>{
           console.log(response);
@@ -57,7 +57,7 @@ export class SignupPage implements OnInit {
               email: value.email,
             });
             this.loading.dismiss();
-            this.router.navigate(['tabs']);
+            this.router.navigate(['tabs/activities']);
           }
         }, error=>{
           this.loading.dismiss();
