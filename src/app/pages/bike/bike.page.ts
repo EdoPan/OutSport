@@ -4,6 +4,8 @@ import { WorkoutService } from '../../services/workout.service';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Workout } from '../../model/workout.model';
+import {User} from '../../model/user.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-bike',
@@ -16,13 +18,18 @@ export class BikePage implements OnInit {
   disableStartButton;
   disableStopButton = true;
   interval;
-  inter = 0;//intervallo per il database
+  inter;//intervallo per il database (differenza di Date in millisecondi)
   startTime: number;
   endTime: number;
   time = new Date(null);
   newWorkout: Workout = <Workout>{};
 
-  constructor(private storageService: WorkoutService, private alertController: AlertController, private nav: NavController ) { }
+  constructor(private storageService: WorkoutService,
+              private alertController: AlertController,
+              private nav: NavController,
+              private userStorage: UserService) {
+    this.inter = 0;
+  }
 
   ngOnInit() {}
 
@@ -32,6 +39,8 @@ export class BikePage implements OnInit {
     }, 1000);
 
     this.startTime = Date.now();
+
+    this.newWorkout.calories = 0;
 
     this.disableStartButton = true;
     this.disableBackButton = true;
@@ -83,6 +92,9 @@ export class BikePage implements OnInit {
 
             this.newWorkout.distance = res.Distance;
 
+            this.calculatesCalories(this.inter);
+            this.inter = 0;
+
             this.storageService.addWorkout( this.newWorkout );
             this.nav.navigateForward( ['tabs'] );
           }
@@ -97,6 +109,22 @@ export class BikePage implements OnInit {
     });
     await alert.present();
     this.disableStartButton = false;
+  }
+
+  //servono peso e tempo dell'allenamento
+  //peso = parametro da prendere al DB, tempo = interval
+  //Kcal*Kg/h
+  //spostare nel caso l'assegnazionie a this.nreWorkout.calories
+  async calculatesCalories( interv: number ){
+    let userWeight: number;
+    this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
+      userWeight = user.weight;
+      const KCAL_BIKE = 5;//valore medio (possibili diverse velocità)
+      const hours = (interv/1000)/3600;
+      if ( userWeight > 0) {
+        this.newWorkout.calories = Math.ceil((KCAL_BIKE * userWeight)*hours);
+      }
+    });
   }
 
 }

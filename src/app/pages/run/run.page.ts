@@ -3,6 +3,8 @@ import {AlertController, NavController} from '@ionic/angular';
 import { WorkoutService } from '../../services/workout.service';
 import firebase from 'firebase';
 import { Workout } from '../../model/workout.model';
+import {User} from '../../model/user.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-run',
@@ -21,7 +23,10 @@ export class RunPage implements OnInit {
   time = new Date(null);
   newWorkout: Workout = <Workout>{};
 
-  constructor(private storageService: WorkoutService, public alertController: AlertController, private nav: NavController ) { }
+  constructor(private storageService: WorkoutService,
+              public alertController: AlertController,
+              private nav: NavController,
+              private userStorage: UserService) { }
 
   ngOnInit() {}
 
@@ -74,6 +79,8 @@ export class RunPage implements OnInit {
 
             this.newWorkout.distance = res.Distance;
 
+            this.calculatesCalories(this.inter);
+
             this.storageService.addWorkout( this.newWorkout );
             this.nav.navigateForward( ['tabs'] );
           }
@@ -99,6 +106,16 @@ export class RunPage implements OnInit {
     this.disableStartButton = false;
   }
 
-
+  async calculatesCalories( interv: number ){
+    let userWeight: number;
+    this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
+      userWeight = user.weight;
+      const KCAL_RUN = 8;//valore medio (possibili diverse velocità)
+      const hours = (interv/1000)/3600;
+      if ( userWeight > 0) {
+        this.newWorkout.calories = Math.ceil((KCAL_RUN * userWeight)*hours);
+      }
+    });
+  }
 
 }

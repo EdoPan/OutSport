@@ -5,6 +5,8 @@ import {AuthService} from '../../services/auth.service';
 import {AlertController, NavController} from '@ionic/angular';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import {User} from '../../model/user.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +14,9 @@ import 'firebase/firestore';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
+
+  users: User[] = [];
+  newUser: User = <User>{};
 
   validationMessages = {
     email: [
@@ -31,7 +36,8 @@ export class SignupPage implements OnInit {
                private formbuilder: FormBuilder,
                private authService: AuthService,
                private alertCtrl: AlertController,
-               private navCtr: NavController){}
+               private navCtr: NavController,
+               private userStorage: UserService){}
 
   ngOnInit() {
     this.ValidationFormUser = this.formbuilder.group({
@@ -89,16 +95,15 @@ export class SignupPage implements OnInit {
     load.present();
   }
 
-  emailDB(){
-    const db = firebase.firestore(); //Creo un'istanza del DB
-    db.collection('users').doc(this.ValidationFormUser.value.email.toString()).set({
-      email: this.ValidationFormUser.value.email,
-      gender: '',
-      age: '',
-      height: '',
-      weight: ''
-    });
-    //this.storage.set('email': this.ValidationFormUser.value.email, 'gender': '','age': '', 'height': '', 'weight': '');
+  //Memorizza i dati nel database
+  addUserDB() {
+    this.newUser.email = this.ValidationFormUser.value.email;
+    this.newUser.age = 0;
+    this.newUser.gender = '';
+    this.newUser.height = 0;
+    this.newUser.weight = 0;
+    this.userStorage.addUser(this.newUser);
+    this.newUser = <User>{};
   }
 
 }

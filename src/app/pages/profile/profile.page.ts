@@ -4,6 +4,8 @@ import 'firebase/firestore';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
+import {User} from '../../model/user.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +16,7 @@ export class ProfilePage implements OnInit {
 
   validationFormUser: FormGroup;
   db = firebase.firestore(); //Creo un'istanza del DB
+  newUser: User = <User>{};
 
   validationMessages = {
     gender: [
@@ -34,37 +37,19 @@ export class ProfilePage implements OnInit {
     ]
   };
 
-  /*
-  constructor( private router: Router, private alertCtrl: AlertController ) {
-     const document = this.db.collection('users').doc( firebase.auth().currentUser.email );
-     let dataDoc;
-     document.get().then((doc) => {
-       if (doc.exists) {
-         dataDoc = doc.data();
-       } else {
-         console.log('No such document!');
-       }
-     }).catch((error) => {
-       console.log('Error getting document:', error);
-     });
+  constructor( private router: Router,
+               private alertController: AlertController,
+               private nav: NavController,
+               private userStorage: UserService) {}
 
-     this.validationFormUser = new FormGroup({
-       gender: new FormControl(dataDoc.gender, Validators.required),
-       age: new FormControl('', Validators.compose([Validators.minLength(2), Validators.maxLength(2)])),
-       height: new FormControl('', Validators.compose([Validators.minLength(3), Validators.maxLength(3)])),
-       weight: new FormControl('', Validators.compose([Validators.minLength(3), Validators.maxLength(3)]))
-     });
-   }
-  */
-
-  constructor( private router: Router, private alertController: AlertController, private nav: NavController ) {}
-
-  async saveData(){
-      this.db.collection('users').doc( firebase.auth().currentUser.email ).update({
-      gender: this.validationFormUser.value.gender,
-      age: this.validationFormUser.value.age,
-      height: this.validationFormUser.value.height,
-      weight: this.validationFormUser.value.weight
+  async saveData() {
+    this.newUser.email = firebase.auth().currentUser.email;
+    this.newUser.gender = this.validationFormUser.value.gender;
+    this.newUser.age = this.validationFormUser.value.age;
+    this.newUser.weight = this.validationFormUser.value.height;
+    this.newUser.height = this.validationFormUser.value.weight;
+    this.userStorage.uptdateDataUser( this.newUser ).then(() => {
+      this.newUser = <User>{};
     });
 
     const alert = await this.alertController.create({

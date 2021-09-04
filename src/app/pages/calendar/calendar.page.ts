@@ -1,7 +1,8 @@
 import {Component, OnInit } from '@angular/core';
-import { StorageService } from '../../services/storage.service';
+import { WorkoutService } from '../../services/workout.service';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
 import { Workout } from '../../model/workout.model';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-calendar',
@@ -11,10 +12,10 @@ import { Workout } from '../../model/workout.model';
 export class CalendarPage implements OnInit {
 
   workouts: Workout[] = [];
-
   newWorkout: Workout = <Workout>{};
+  db = firebase.firestore();
 
-  constructor(private storageService: StorageService, private plt: Platform, private toastController: ToastController,
+  constructor(private storageService: WorkoutService, private plt: Platform, private toastController: ToastController,
               private alertController: AlertController) {
     this.plt.ready().then(() => {
       this.loadWorkouts();
@@ -29,7 +30,7 @@ export class CalendarPage implements OnInit {
 
   //Read (cRud)
   loadWorkouts(){
-    this.storageService.getWorkouts().then(workouts =>{
+    this.storageService.getWorkouts( firebase.auth().currentUser.email ).then(workouts =>{
       this.workouts = workouts;
     });
   }
