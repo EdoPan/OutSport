@@ -98,7 +98,7 @@ export class RunPage implements OnInit {
           type: 'number',
           min: 0,
           id: 'distance',
-          placeholder: 'Distance'
+          placeholder: 'Distance (km)'
         }
       ]
     });

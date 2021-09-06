@@ -98,7 +98,7 @@ export class WalkPage implements OnInit {
           id: 'Distance',
           type: 'number',
           min: 0,
-          placeholder: 'Distance',
+          placeholder: 'Distance (Km)',
         }
       ]
     });

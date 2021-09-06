@@ -71,6 +71,7 @@ export class BikePage implements OnInit {
           type: 'number',
           min: 0,
           id: 'distance',
+          placeholder: 'Distance (Km)'
         }
       ],
       buttons: [
