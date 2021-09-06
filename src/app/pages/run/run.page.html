@@ -9,11 +9,12 @@
 
 <ion-content>
 
-  <div class="timer">
-    <p>{{time.toISOString().substr(11, 8)}}</p>
+  <div>
+    <p class="time">Time</p>
+    <p class="timer">{{time.toISOString().substr(11, 8)}}</p>
   </div>
 
-  <div class="calories">
+  <div>
     <p>{{this.newWorkout.calories}}</p>
   </div>
 

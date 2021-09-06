@@ -9,8 +9,9 @@
 
 <ion-content>
 
-  <div class="timer">
-    <p>{{time.toISOString().substr(11, 8)}}</p>
+  <div>
+    <p class="time">Time</p>
+    <p class="timer">{{time.toISOString().substr(11, 8)}}</p>
   </div>
 
   <ion-fab-button class="stop" shape="round" expand="block" fill="outline" [disabled]="disableStopButton" (click)="stopActivity()">Stop</ion-fab-button>
