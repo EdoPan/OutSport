@@ -15,6 +15,7 @@ export class RunPage implements OnInit {
 
   disableBackButton;
   disableStartButton;
+  disablePauseButton;
   disableStopButton = true;
   interval;
   inter = 0;//intervallo per il database
@@ -38,6 +39,7 @@ export class RunPage implements OnInit {
     this.startTime = Date.now();
 
     this.disableStartButton = true;
+    this.disablePauseButton = false;
     this.disableBackButton = true;
     this.disableStopButton = false;
   }
@@ -49,13 +51,20 @@ export class RunPage implements OnInit {
     this.inter = this.endTime - this.startTime;
 
     this.disableStartButton = false;
+    this.disablePauseButton = true;
+    this.disableBackButton = true;
   }
 
   async stopActivity() {
     clearInterval(this.interval);
 
-    this.endTime = Date.now();
-    this.inter = this.inter + (this.endTime - this.startTime);
+    if (this.disablePauseButton){
+      this.inter = this.endTime - this.startTime;
+    }
+    else {
+      this.endTime = Date.now();
+      this.inter = this.inter + (this.endTime - this.startTime);
+    }
 
     const alert = await this.alertController.create({
       header: 'Save',

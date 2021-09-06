@@ -14,7 +14,10 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Gender</ion-label>
-      <ion-input formControlName="gender" placeholder="M/F" type="text"></ion-input>
+      <ion-select formControlName="gender" [value]="user.gender" type="text">
+        <ion-select-option value="female">Female</ion-select-option>
+        <ion-select-option value="male">Male</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <div class="text1">
@@ -27,7 +30,7 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Age</ion-label>
-      <ion-input formControlName="age" placeholder="Age (12-99+)" type="number"></ion-input>
+      <ion-input formControlName="age" [value]="user.age" placeholder="Age (12-95)" type="number"></ion-input>
     </ion-item>
 
     <div class="text2">
@@ -40,7 +43,7 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Height</ion-label>
-      <ion-input formControlName="height" placeholder="Height (cm)" type="number"></ion-input>
+      <ion-input formControlName="height" [value]="user.height" placeholder="Height (cm)" type="number"></ion-input>
     </ion-item>
 
     <div class="text3">
@@ -53,7 +56,7 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Weight</ion-label>
-      <ion-input formControlName="weight" placeholder="Weight (Kg)" type="number"></ion-input>
+      <ion-input formControlName="weight" [value]="user.weight" placeholder="Weight (Kg)" type="number"></ion-input>
     </ion-item>
 
     <div class="text4">

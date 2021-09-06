@@ -14,6 +14,8 @@ import {UserService} from '../../services/user.service';
 })
 export class ProfilePage implements OnInit {
 
+  user: User = <User>{};
+
   validationFormUser: FormGroup;
   db = firebase.firestore(); //Creo un'istanza del DB
   newUser: User = <User>{};
@@ -40,14 +42,18 @@ export class ProfilePage implements OnInit {
   constructor( private router: Router,
                private alertController: AlertController,
                private nav: NavController,
-               private userStorage: UserService) {}
+               private userStorage: UserService) {
+    this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
+      this.user = user;
+    });
+  }
 
   async saveData() {
     this.newUser.email = firebase.auth().currentUser.email;
     this.newUser.gender = this.validationFormUser.value.gender;
     this.newUser.age = this.validationFormUser.value.age;
-    this.newUser.weight = this.validationFormUser.value.height;
-    this.newUser.height = this.validationFormUser.value.weight;
+    this.newUser.weight = this.validationFormUser.value.weight;
+    this.newUser.height = this.validationFormUser.value.height;
     this.userStorage.uptdateDataUser( this.newUser ).then(() => {
       this.newUser = <User>{};
     });
@@ -69,16 +75,11 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.validationFormUser = new FormGroup({
-      gender: new FormControl('', Validators.compose([
-        Validators.required/*,
-        Validators.pattern('male'),
-        Validators.pattern('female'),
-        Validators.pattern('Male'),
-        Validators.pattern('Female')*/])),
+      gender: new FormControl(''),
       age: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(3)])),
+        Validators.min(12),
+        Validators.max(95)])),
       height: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2),

@@ -79,6 +79,6 @@ export class UserService {
     });
   }
 
-  //Metodo che ritorna l'email NON SERVE FORSE
-  getEmail(){}
+  //Metodo che ritorna true se l'utente passato come email è presente nel DB
+  //UserByEmail(): boolean{}
 }

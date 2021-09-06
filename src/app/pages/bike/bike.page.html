@@ -14,7 +14,7 @@
   </div>
 
   <ion-fab-button class="stop" shape="round" expand="block" fill="outline" [disabled]="disableStopButton" (click)="stopActivity()">Stop</ion-fab-button>
-  <ion-fab-button class="pause" shape="round" expand="block" fill="outline" (click)="pauseTimer()">Pause</ion-fab-button>
-  <ion-fab-button class="start" shape="round" expand="block" fill="outline" (click)="startTimer()" [disabled]="disableStartButton">Start</ion-fab-button>
+  <ion-fab-button class="pause" shape="round" expand="block" fill="outline" [disabled]="disablePauseButton" (click)="pauseTimer()">Pause</ion-fab-button>
+  <ion-fab-button class="start" shape="round" expand="block" fill="outline" [disabled]="disableStartButton" (click)="startTimer()">Start</ion-fab-button>
 
 </ion-content>
