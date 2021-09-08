@@ -1,11 +1,29 @@
 .run {
   margin: 10px;
+  background-image: url('../../../assets/img/run.png');
+  --opacity: 0;
+  height: 25%;
+  padding: 10px;
 }
 
 .walk {
   margin: 10px;
+  background-image: url('../../../assets/img/walk.png');
+  --opacity: 0;
+  height: 25%;
 }
 
 .bike {
   margin: 10px;
+  background-image: url('../../../assets/img/bike (2).png');
+  --opacity: 0;
+  height: 25%;
+}
+
+ion-icon {
+  font-size: 64px;
+}
+
+ion-toolbar{
+  --background: #111111;
 }

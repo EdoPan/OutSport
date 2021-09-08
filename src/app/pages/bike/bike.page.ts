@@ -35,11 +35,17 @@ export class BikePage implements OnInit {
   ngOnInit() {}
 
   startTimer() {
+    this.startTime = Date.now();
+
     this.interval = setInterval(() => {
       this.time.setSeconds(this.time.getSeconds() + 1 );
     }, 1000);
+    /*
+    setInterval(() => {
+      this.inter = this.endTime - this.startTime;
+      this.calculatesCalories(this.inter);
+    }, 1000);*/
 
-    this.startTime = Date.now();
 
     this.newWorkout.calories = 0;
 
@@ -126,6 +132,7 @@ export class BikePage implements OnInit {
   //Kcal*Kg/h
   //spostare nel caso l'assegnazionie a this.nreWorkout.calories
   async calculatesCalories( interv: number ){
+    //SOLO SE L'UTENTE HA IL PESO
     let userWeight: number;
     this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
       userWeight = user.weight;
@@ -133,6 +140,7 @@ export class BikePage implements OnInit {
       const hours = (interv/1000)/3600;
       if ( userWeight > 0) {
         this.newWorkout.calories = Math.ceil((KCAL_BIKE * userWeight)*hours);
+        console.log((KCAL_BIKE * userWeight)*hours);
       }
     });
   }

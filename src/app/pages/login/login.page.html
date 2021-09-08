@@ -1,18 +1,22 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text='' color="medium"></ion-back-button>
     </ion-buttons>
-    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <div class="container ion-text-center">
+    <img src="assets/img/logo_white_large.png">
+  </div>
+
   <form [formGroup]="ValidationFormUser" (ngSubmit)="LoginUser(ValidationFormUser.value)">
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input placeholder=" Email" name="email" formControlName="email" type="text" required>
+      <ion-input placeholder="Email" name="email" formControlName="email" type="text" required>
         <ion-icon name="mail-outline"></ion-icon>
       </ion-input>
     </ion-item>
@@ -26,7 +30,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit"  [disabled]="!ValidationFormUser.valid" color="danger" expand="block">Login</ion-button>
+        <ion-button type="submit" [disabled]="!ValidationFormUser.valid" color="medium" expand="block">Login</ion-button>
       </ion-col>
     </ion-row>
 

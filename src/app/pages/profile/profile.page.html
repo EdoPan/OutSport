@@ -1,11 +1,11 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="primary">
       <ion-button (click)="navigateToHome()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title class="ion-text-center">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,18 +14,14 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Gender</ion-label>
-      <ion-select formControlName="gender" [value]="user.gender" type="text">
+      <ion-select formControlName="gender" [value]="user.gender">
         <ion-select-option value="female">Female</ion-select-option>
         <ion-select-option value="male">Male</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <div class="text1">
-      <ng-container *ngFor="let validation of validationMessages.gender">
-        <div class="error_message" *ngIf="validationFormUser.get('gender').hasError(validation.type) && (validationFormUser.get('gender').dirty || validationFormUser.get('gender').touched)">
-          {{validation.message}}
-        </div>
-      </ng-container>
+    <div>
+
     </div>
 
     <ion-item lines="full">
@@ -69,7 +65,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="danger" expand="block" (click)="saveData()" [disabled]="!validationFormUser.valid">Save the data</ion-button>
+        <ion-button type="submit" color="medium" expand="block" (click)="saveData()" [disabled]="!validationFormUser.valid">Save the data</ion-button>
       </ion-col>
     </ion-row>
 

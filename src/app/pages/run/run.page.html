@@ -14,12 +14,8 @@
     <p class="timer">{{time.toISOString().substr(11, 8)}}</p>
   </div>
 
-  <div>
-    <p>{{this.newWorkout.calories}}</p>
-  </div>
-
-  <ion-fab-button class="stop" [disabled]="disableStopButton" (click)="stopActivity()">Stop</ion-fab-button>
-  <ion-fab-button class="pause" [disabled]="disablePauseButton" (click)="pauseTimer()">Pause</ion-fab-button>
-  <ion-fab-button class="start" (click)="startTimer()" [disabled]="disableStartButton">Start</ion-fab-button>
+  <ion-fab-button color="medium" class="stop" [disabled]="disableStopButton" (click)="stopActivity()">Stop</ion-fab-button>
+  <ion-fab-button color="medium" class="pause" [disabled]="disablePauseButton" (click)="pauseTimer()">Pause</ion-fab-button>
+  <ion-fab-button color="medium" class="start" (click)="startTimer()" [disabled]="disableStartButton">Start</ion-fab-button>
 
 </ion-content>

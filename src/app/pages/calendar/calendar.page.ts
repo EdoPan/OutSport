@@ -3,6 +3,7 @@ import { WorkoutService } from '../../services/workout.service';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
 import { Workout } from '../../model/workout.model';
 import firebase from 'firebase';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +17,7 @@ export class CalendarPage implements OnInit {
   db = firebase.firestore();
 
   constructor(private storageService: WorkoutService, private plt: Platform, private toastController: ToastController,
-              private alertController: AlertController) {
+              private alertController: AlertController, private router: Router) {
     this.plt.ready().then(() => {
       this.loadWorkouts();
     });
@@ -48,7 +49,8 @@ export class CalendarPage implements OnInit {
   async showToast( msg ){
     const toast = await this.toastController.create({
       message: msg,
-      duration: 1000
+      duration: 1000,
+      position: 'top',
     });
     toast.present();
   }

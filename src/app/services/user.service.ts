@@ -80,5 +80,19 @@ export class UserService {
   }
 
   //Metodo che ritorna true se l'utente passato come email è presente nel DB
-  //UserByEmail(): boolean{}
+  //PER ORA NON SERVE
+  checkUserByEmail( email: string ): Promise<boolean>{
+    return this.storage.get( USER_KEY ).then((users: User[])=>{
+      let bool = false;
+      if ( users !== null && users.length > 0 ){
+        for (const i of users) {
+          if (i.email === email) {
+            bool = true;
+          }
+        }
+      }
+      return bool;
+    });
+  }
+
 }

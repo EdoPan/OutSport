@@ -54,25 +54,33 @@ export class SignupPage implements OnInit {
 
   registerUser(value){
     //this.showalert();
-      this.router.navigate(['tabs/activities']);
-      try {
-        this.authService.userRegistration(value).then(response => {
-            console.log(response);
-            if (response.user) {
-              response.updateProfile({
-                email: value.email,
-              });
-              this.loading.dismiss();
-              this.router.navigate(['tabs/activities']);
-            }
-          }, error => {
-            this.loading.dismiss();
-            this.errorLoading(error.message);
-          }
-        );
-      } catch (erro) {
-        console.log(erro);
+    this.userStorage.checkUserByEmail(this.ValidationFormUser.value.email).then((bool: boolean)=>{
+      if (bool){
+        console.log('utente si sopra');//MESSAGGIO
       }
+      else{
+        this.router.navigate(['tabs/activities']);
+        try {
+          this.authService.userRegistration(value).then(response => {
+              console.log(response);
+              if (response.user) {
+                response.updateProfile({
+                  email: value.email,
+                });
+                this.loading.dismiss();
+                this.router.navigate(['tabs/activities']);
+              }
+            }, error => {
+              this.loading.dismiss();
+              this.errorLoading(error.message);
+            }
+          );
+        } catch (erro) {
+          console.log(erro);
+        }
+
+      }
+    });
   }
 
   async errorLoading(message: any){
@@ -98,16 +106,27 @@ export class SignupPage implements OnInit {
 
   //Memorizza i dati nel database
   addUserDB() {
-    //if (!this.userStorage.getUser(this.ValidationFormUser.value.email)) {
-      this.newUser.email = this.ValidationFormUser.value.email;
-      /*
-      this.newUser.age = 0;
-      this.newUser.gender = '';
-      this.newUser.height = 0;
-      this.newUser.weight = 0;
-       */
-      this.userStorage.addUser(this.newUser);
-      this.newUser = <User>{};
-    }
-  //}
+    this.userStorage.checkUserByEmail(this.ValidationFormUser.value.email).then((bool: boolean)=>{
+      if (bool){
+        console.log('utente si');
+
+      }
+      else{
+        console.log('utente no');
+        this.newUser.email = this.ValidationFormUser.value.email;
+        this.userStorage.addUser(this.newUser);
+        this.newUser = <User>{};
+      }
+    });
+    /*
+    this.newUser.email = this.ValidationFormUser.value.email;
+    this.newUser.age = 0;
+    this.newUser.gender = '';
+    this.newUser.height = 0;
+    this.newUser.weight = 0;
+    this.userStorage.addUser(this.newUser);
+    this.newUser = <User>{};
+     */
+  }
+
 }

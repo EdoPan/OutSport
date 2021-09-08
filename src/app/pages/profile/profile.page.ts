@@ -21,10 +21,6 @@ export class ProfilePage implements OnInit {
   newUser: User = <User>{};
 
   validationMessages = {
-    gender: [
-      {type: 'required',message:'Enter a valid value'},
-      {type:'pattern', meesage:'Please the Email Entered is Incorrect. Try again..'}
-    ],
     age: [
       {type: 'required', message: 'Enter a valid value'},
       {type:'minlength', message: 'Age must be at least 2 character'}
@@ -75,18 +71,18 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.validationFormUser = new FormGroup({
-      gender: new FormControl(''),
+      gender: new FormControl('',Validators.required),
       age: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(12),
-        Validators.max(95)])),
+        Validators.min(0),
+        Validators.maxLength(3)])),
       height: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(2),
+        Validators.min(2),
         Validators.max(300)])),
       weight: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(2),
+        Validators.min(2),
         Validators.max(150)]))
     });
   }
