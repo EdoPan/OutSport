@@ -71,18 +71,18 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.validationFormUser = new FormGroup({
-      gender: new FormControl('',Validators.required),
+      gender: new FormControl(''),
       age: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(0),
-        Validators.maxLength(3)])),
+        Validators.min(12),
+        Validators.max(95)])),
       height: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(2),
+        Validators.min(50),
         Validators.max(300)])),
       weight: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(2),
+        Validators.min(50),
         Validators.max(150)]))
     });
   }
