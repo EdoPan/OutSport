@@ -6,4 +6,5 @@ export interface Workout {
   time: string;
   distance: number;
   calories: number;
+  averageSpeed: number;
 }

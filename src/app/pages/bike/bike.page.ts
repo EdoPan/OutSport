@@ -20,34 +20,41 @@ export class BikePage implements OnInit {
   disableStopButton = true;
   interval;
   inter;//intervallo per il database (differenza di Date in millisecondi)
-  startTime: number;
-  endTime: number;
   time = new Date(null);
   newWorkout: Workout = <Workout>{};
+  trainingInProgress = false;
+  id;
+  user: User = <User>{};
 
   constructor(private storageService: WorkoutService,
               private alertController: AlertController,
               private nav: NavController,
               private userStorage: UserService) {
+    this.newWorkout.calories = 0;
+    this.disablePauseButton = true;
+    this.disableStopButton = true;
+
+    this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
+      this.user = user;
+    });
+
     this.inter = 0;
+    this.id = setInterval(() =>{
+      if (this.trainingInProgress === true){//se l'allenamento è in corso
+        this.inter = this.inter + 250;
+      }
+      this.calculatesCalories(this.inter);
+    },250);
   }
 
   ngOnInit() {}
 
   startTimer() {
-    this.startTime = Date.now();
+    this.trainingInProgress = true;
 
     this.interval = setInterval(() => {
       this.time.setSeconds(this.time.getSeconds() + 1 );
     }, 1000);
-    /*
-    setInterval(() => {
-      this.inter = this.endTime - this.startTime;
-      this.calculatesCalories(this.inter);
-    }, 1000);*/
-
-
-    this.newWorkout.calories = 0;
 
     this.disableStartButton = true;
     this.disablePauseButton = false;
@@ -56,10 +63,9 @@ export class BikePage implements OnInit {
   }
 
   pauseTimer() {
-    clearInterval(this.interval);
+    this.trainingInProgress = false;
 
-    this.endTime = Date.now();
-    this.inter = this.endTime - this.startTime;
+    clearInterval(this.interval);
 
     this.disableStartButton = false;
     this.disablePauseButton = true;
@@ -67,15 +73,8 @@ export class BikePage implements OnInit {
   }
 
   async stopActivity() {
+    this.trainingInProgress = false;
     clearInterval(this.interval);
-
-    if (this.disablePauseButton){
-      this.inter = this.endTime - this.startTime;
-    }
-    else {
-      this.endTime = Date.now();
-      this.inter = this.inter + (this.endTime - this.startTime);
-    }
 
     const alert = await this.alertController.create({
       header: 'Save',
@@ -106,10 +105,19 @@ export class BikePage implements OnInit {
             const today = new Date().toDateString();
             this.newWorkout.dateDatabase = today;
 
-            this.newWorkout.distance = res.Distance;
+            if ( res.Distance !== '' ){
+              console.log('inserito un valore non nullo in newWorkout.distance');
+              this.newWorkout.distance = res.Distance;
+              //velocità=spazio/tempo in Km/h
+              this.newWorkout.averageSpeed = Math.ceil(((this.newWorkout.distance*1000)/((this.inter/1000)))*3.6);
+            } else {
+              console.log('inserito un valore nullo in newWorkout.distance');
+              this.newWorkout.distance = null;
+            }
 
-            this.calculatesCalories(this.inter);
             this.inter = 0;
+
+            clearInterval(this.id);//per fermare setInteval
 
             this.storageService.addWorkout( this.newWorkout );
             this.nav.navigateForward( ['tabs'] );
@@ -118,6 +126,8 @@ export class BikePage implements OnInit {
         {
           text: 'Discard',
           handler: () => {
+            clearInterval(this.id);//per fermare setInteval
+
             this.nav.navigateForward( ['tabs'] );
           }
         }
@@ -127,22 +137,14 @@ export class BikePage implements OnInit {
     this.disableStartButton = false;
   }
 
-  //servono peso e tempo dell'allenamento
-  //peso = parametro da prendere al DB, tempo = interval
-  //Kcal*Kg/h
-  //spostare nel caso l'assegnazionie a this.nreWorkout.calories
   async calculatesCalories( interv: number ){
-    //SOLO SE L'UTENTE HA IL PESO
-    let userWeight: number;
-    this.userStorage.getUser( firebase.auth().currentUser.email ).then((user: User) => {
-      userWeight = user.weight;
-      const KCAL_BIKE = 5;//valore medio (possibili diverse velocità)
-      const hours = (interv/1000)/3600;
-      if ( userWeight > 0) {
-        this.newWorkout.calories = Math.ceil((KCAL_BIKE * userWeight)*hours);
-        console.log((KCAL_BIKE * userWeight)*hours);
-      }
-    });
+    const KCAL_RUN = 8;//valore medio (possibili diverse velocità)
+    const hours = (interv/1000)/3600;
+    if ( this.user.weight > 0) {
+      this.newWorkout.calories = Math.ceil((KCAL_RUN * this.user.weight)*hours);
+    } else {
+      this.newWorkout.calories = null;
+    }
   }
 
 }

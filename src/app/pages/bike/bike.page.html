@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [disabled]="disableBackButton"></ion-back-button>
+      <ion-back-button text="" color="medium" [disabled]="disableBackButton"></ion-back-button>
     </ion-buttons>
     <ion-title>Bike</ion-title>
   </ion-toolbar>
@@ -14,9 +14,14 @@
     <p class="timer">{{time.toISOString().substr(11, 8)}}</p>
   </div>
 
-  <div>
-    <p class="calories">Time</p>
-    <p class="calories">{{this.newWorkout.calories}}</p>
+  <div *ngIf="user.weight !== null">
+    <p class="calories1">Calories</p>
+    <p class="calories2">{{this.newWorkout.calories}}</p>
+  </div>
+
+  <div *ngIf="user.weight === null">
+    <p class="calories1">Calories</p>
+    <p class="calories2">-</p>
   </div>
 
   <ion-fab-button color="medium" class="stop" shape="round" expand="block" fill="outline" [disabled]="disableStopButton" (click)="stopActivity()">Stop</ion-fab-button>

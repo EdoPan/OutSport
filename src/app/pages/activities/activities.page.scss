@@ -1,27 +1,33 @@
 .run {
-  margin: 10px;
   background-image: url('../../../assets/img/run.png');
+  background-size: contain;
   --opacity: 0;
-  height: 25%;
-  padding: 10px;
+  margin-top: 3%;
+  margin-left: 30%;
+  height: 130px;
+  width: 130px;
 }
 
 .walk {
-  margin: 10px;
+  //margin: 10px;
   background-image: url('../../../assets/img/walk.png');
+  background-size: contain;
+  margin-left: 30%;
   --opacity: 0;
-  height: 25%;
+  margin-top: 5%;
+  height: 130px;
+  width: 130px;
 }
 
 .bike {
-  margin: 10px;
-  background-image: url('../../../assets/img/bike (2).png');
+  //margin: 10px;
+  background-image: url('../../../assets/img/bike.png');
+  background-size: contain;
+  margin-left: 25%;
+  margin-top: 3%;
   --opacity: 0;
-  height: 25%;
-}
-
-ion-icon {
-  font-size: 64px;
+  height: 160px;
+  width: 160px;
 }
 
 ion-toolbar{

@@ -74,15 +74,15 @@ export class ProfilePage implements OnInit {
       gender: new FormControl(''),
       age: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(12),
+        Validators.min(14),
         Validators.max(95)])),
       height: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(50),
+        Validators.min(100),
         Validators.max(300)])),
       weight: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.min(50),
+        Validators.min(45),
         Validators.max(150)]))
     });
   }

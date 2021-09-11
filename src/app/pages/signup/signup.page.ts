@@ -56,7 +56,7 @@ export class SignupPage implements OnInit {
     //this.showalert();
     this.userStorage.checkUserByEmail(this.ValidationFormUser.value.email).then((bool: boolean)=>{
       if (bool){
-        console.log('utente si sopra');//MESSAGGIO
+        this.showalert('Already registered user');
       }
       else{
         this.router.navigate(['tabs/activities']);
@@ -97,9 +97,9 @@ export class SignupPage implements OnInit {
     await loading.present();
   }
 
-  async showalert(){
+  async showalert(msg){
     const load = await this.alertCtrl.create({
-      message:'Please wait',
+      message:msg,
     });
     load.present();
   }
@@ -108,25 +108,19 @@ export class SignupPage implements OnInit {
   addUserDB() {
     this.userStorage.checkUserByEmail(this.ValidationFormUser.value.email).then((bool: boolean)=>{
       if (bool){
-        console.log('utente si');
-
+        console.log('utente già registrato nel DB');
       }
       else{
-        console.log('utente no');
+        console.log('utente non presente nel DB');
         this.newUser.email = this.ValidationFormUser.value.email;
+        this.newUser.gender = null;
+        this.newUser.weight = null;
+        this.newUser.height = null;
+        this.newUser.age = null;
         this.userStorage.addUser(this.newUser);
         this.newUser = <User>{};
       }
     });
-    /*
-    this.newUser.email = this.ValidationFormUser.value.email;
-    this.newUser.age = 0;
-    this.newUser.gender = '';
-    this.newUser.height = 0;
-    this.newUser.weight = 0;
-    this.userStorage.addUser(this.newUser);
-    this.newUser = <User>{};
-     */
   }
 
 }
