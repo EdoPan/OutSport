@@ -41,10 +41,10 @@ export class BikePage implements OnInit {
     this.inter = 0;
     this.id = setInterval(() =>{
       if (this.trainingInProgress === true){//se l'allenamento è in corso
-        this.inter = this.inter + 250;
+        this.inter = this.inter + 1000;
       }
       this.calculatesCalories(this.inter);
-    },250);
+    },1000);
   }
 
   ngOnInit() {}

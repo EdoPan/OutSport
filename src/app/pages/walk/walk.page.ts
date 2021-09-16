@@ -80,12 +80,22 @@ export class WalkPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Save',
       message: 'Do you want to save the workout?',
+      inputs: [
+        {
+          name: 'Distance',
+          id: 'Distance',
+          type: 'number',
+          min: 0,
+          placeholder: 'Distance (Km)',
+        }
+      ],
       buttons: [
         {
           text: 'Save',
           handler: (res) => {
             this.newWorkout.email = firebase.auth().currentUser.email;
             this.newWorkout.sport = 'Walk';
+            this.newWorkout.date = Date.now();
 
             //PER MEMORIZZARE I DATI IN UN FORMATO: "ORE":"MINUTI":"SECONDI"
             const hours = Math.floor((this.inter/1000)/3600);
@@ -123,15 +133,6 @@ export class WalkPage implements OnInit {
           }
         }
       ],
-      inputs: [
-        {
-          name: 'Distance',
-          id: 'Distance',
-          type: 'number',
-          min: 0,
-          placeholder: 'Distance (Km)',
-        }
-      ]
     });
     await alert.present();
     this.disableStartButton = false;
