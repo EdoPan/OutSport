@@ -139,10 +139,10 @@ export class WalkPage implements OnInit {
   }
 
   async calculatesCalories( interv: number ){
-    const KCAL_RUN = 8;//valore medio (possibili diverse velocità)
+    const KCAL_WALK = 3;//valore medio (possibili diverse velocità)
     const hours = (interv/1000)/3600;
     if ( this.user.weight > 0) {
-      this.newWorkout.calories = Math.ceil((KCAL_RUN * this.user.weight)*hours);
+      this.newWorkout.calories = Math.ceil((KCAL_WALK * this.user.weight)*hours);
     } else {
       this.newWorkout.calories = null;
     }
